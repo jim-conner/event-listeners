@@ -1,5 +1,3 @@
-console.log('CONNECTED!');
-
 const pies = [
   {
     name: 'Dutch Apple Pie',
@@ -63,15 +61,13 @@ const pies = [
   },
 ];
 
-// let filtered = false;
-// const selectedPies = [];
-
 const printToDom = (divId, textToPrint) => {
   const selectedDiv = document.querySelector(divId);
   selectedDiv.innerHTML = textToPrint;
 }
 
 const pieBuilder = (taco) => {
+
 //   let domString = '';
 //   for (let i = 0; i < taco.length; i++) {
 //     domString += `<div class="card my-2" style="width: 18rem;" id=${i}>
@@ -106,9 +102,27 @@ for (const item of taco) {
 
 }
           }
+  let domString = '';
+  for (let i = 0; i <taco.length; i++) {
+
+domString += `<div class="card my-2" style="width: 18rem;" id=${i}>
+                    <div class="img-container" style="background-image: url('${taco[i].imageUrl}');"></div>
+                    <div class="card-body">
+                      <p class="card-text">${taco[i].name}</p>
+                      <p class="card-text">${taco[i].ingredients}</p>
+                      <p class="card-text">${taco[i].bakeTemp}</p>
+                      <p class="card-text">${taco[i].drinkPairing}</p>
+                      <p class="card-text">${taco[i].iceCream}</p>
+                      <button type="button" class="btn btn-danger" id="${i}">Delete</button>
+                    </div>
+                  </div>`;
+  }
+  printToDom('#pies', domString);
+}
 
 const handleButtonClick = (e) => {
   const buttonId = e.target.id;
+
 
   // CHANGING BG COLOR BASED ON BUTTON CLICK
   if (buttonId === 'Trinity') {
@@ -123,13 +137,30 @@ const handleButtonClick = (e) => {
   } else if (buttonId === 'All') {
     // DEFAULT
     document.querySelector('body').style.backgroundColor = 'rgb(175, 196, 175)';
+  // CHANGING BACKGROUND  COLOR BASED ON BUTTON CLICKED
+  if (buttonId === 'Trinity') {
+    // DARK MODE
+    document.querySelector('body').style.backgroundColor = '#000'
+  } else if (buttonId === 'Doc') {
+    // LIGHT MODE
+    document.querySelector('body').style.backgroundColor = '#fff'
+  } else if (buttonId === 'Aja') {
+    // MEDIUM MODE
+    document.querySelector('body').style.backgroundColor = '#808080'
+  } else if (buttonId === 'All') {
+    // DEFAULT
+    document.querySelector('body').style.backgroundColor = 'rgb(175, 196, 175)'
   }
 
   // UPDATE THE PIES BASED ON BUTTON CLICKED
   const selectedPies = [];
+
   // pies[0].instructor // 'Doc'
   for (let i = 0; i < pies.length; i++) {
     if (pies[i].instructor === buttonId) {
+  for (let i = 0; i < pies.length; i++){
+    // pies[0].instructor // 'Doc'
+    if(pies[i].instructor === buttonId){
       selectedPies.push(pies[i]);
     }
   }
@@ -195,6 +226,20 @@ const deletePie = (e) => {
 }
 
 const buttonEvents = () => {
+  
+  if(buttonId === 'All') {
+    pieBuilder(pies);
+  } else {
+    pieBuilder(selectedPies);
+  }
+}
+
+const buttonEvents = () => {
+  const allBtn = document.querySelector('#All')
+  const docBtn = document.querySelector('#Doc')
+  const ajaBtn = document.querySelector('#Aja')
+  const TrinityBtn = document.querySelector('#Trinity')
+  
   document.querySelector('#All').addEventListener('click', handleButtonClick);
   document.querySelector('#Doc').addEventListener('click', handleButtonClick);
   document.querySelector('#Aja').addEventListener('click', handleButtonClick);
@@ -208,6 +253,15 @@ const buttonEvents = () => {
 
 const init = () => {
   buttonEvents();
+
+  allBtn.addEventListener('click', (e) => {
+    console.log(e.target.id)
+  })
+}
+
+const init = () => {
+ buttonEvents();
+  
   pieBuilder(pies);
 }
 
