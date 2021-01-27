@@ -122,7 +122,17 @@ const handleButtonClick = (e) => {
   }
 
 }
+// D in CRUD: Delete the Pie
+const deletePie = (e) => {
+  const targetType = e.target.type;
+  const targetId = e.target.id;
 
+  if (targetType === 'button') {
+    //DO SOMETHING
+    pies.splice(targetId, 1)
+  }
+  pieBuilder(pies);
+}
 
 // C in CRUD: Create new Pies
 const getFormInfo = (e) => {
@@ -163,6 +173,12 @@ const buttonEvents = () => {
   document.querySelector('#Doc').addEventListener('click', handleButtonClick);
   document.querySelector('#Aja').addEventListener('click', handleButtonClick);
   document.querySelector('#Trinity').addEventListener('click', handleButtonClick);
+  
+  // Need to move this code below and clean it up
+  //Targeting the Delete Button
+  document.querySelector('#pies').addEventListener('click', deletePie)
+    
+
   document.querySelector('form').addEventListener('submit', getFormInfo);
 }
 
